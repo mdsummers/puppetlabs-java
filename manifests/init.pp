@@ -12,8 +12,9 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class java(
-  $distribution = 'jdk',
-  $version      = 'present'
+  $distribution  = 'jdk',
+  $version       = 'present'
+  $packagesource = UNSET,
 ) {
 
   validate_re($distribution, '^jdk$|^jre$|^java.*$')
@@ -26,9 +27,15 @@ class java(
 
     'RedHat': {
 
+      $rpmsource = $packagesource ? {
+        UNSET   => undef,
+        default => $packagesource,
+      }
+
       class { 'java::package_redhat':
         version      => $version,
         distribution => $distribution,
+        rpmsource    => $rpmsource,
         require      => Anchor['java::begin'],
         before       => Anchor['java::end'],
       }

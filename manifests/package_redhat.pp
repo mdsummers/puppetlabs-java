@@ -17,12 +17,22 @@
 #
 class java::package_redhat(
   $version,
-  $distribution
+  $distribution,
+  $rpmsource = UNDEF
 ) {
 
-  package { 'java':
-    ensure => $version,
-    name   => $distribution,
+  if $rpmsource == UNDEF {
+    package { 'java':
+      ensure => $version,
+      name   => $distribution,
+    }
+  } else {
+    package { 'java':
+      ensure   => $version,
+      name     => $distribution,
+      provider => rpm,
+      source   => $rpmsource,
+    }
   }
 
 }
