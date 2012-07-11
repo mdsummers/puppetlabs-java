@@ -13,7 +13,7 @@
 # [Remember: No empty lines between comments and class definition]
 class java(
   $distribution  = 'jdk',
-  $version       = 'present'
+  $version       = 'present',
   $packagesource = UNSET,
 ) {
 
