@@ -14,7 +14,7 @@
 class java(
   $distribution  = 'jdk',
   $version       = 'present',
-  $packagesource = UNSET,
+  $packagesource = 'UNSET',
 ) {
 
   validate_re($distribution, '^jdk$|^jre$|^java.*$')
@@ -28,7 +28,7 @@ class java(
     'RedHat': {
 
       $rpmsource = $packagesource ? {
-        UNSET   => undef,
+        'UNSET'   => undef,
         default => $packagesource,
       }
 
