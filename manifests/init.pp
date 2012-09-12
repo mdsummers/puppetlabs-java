@@ -26,9 +26,21 @@ class java(
 
     'RedHat': {
 
+      case $::lsbmajdistrelease {
+        5: {
+          $distribution_redhat = $distribution ? {
+            jdk => 'java-1.6.0-openjdk-devel',
+            jre => 'java-1.6.0-openjdk',
+          }
+        }
+        default: {
+          fail("operatingsystem release ${::lsbmajdistrelease} is not supported")
+        }
+      }
+
       class { 'java::package_redhat':
         version      => $version,
-        distribution => $distribution,
+        distribution => $distribution_redhat,
         require      => Anchor['java::begin'],
         before       => Anchor['java::end'],
       }
