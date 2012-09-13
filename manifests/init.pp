@@ -26,15 +26,15 @@ class java(
 
     'RedHat': {
 
-      case $::lsbmajdistrelease {
-        5: {
+      case $::operatingsystemrelease {
+        /^5\./: {
           $distribution_redhat = $distribution ? {
             jdk => 'java-1.6.0-openjdk-devel',
             jre => 'java-1.6.0-openjdk',
           }
         }
         default: {
-          fail("operatingsystem release ${::lsbmajdistrelease} is not supported")
+          fail("operatingsystem release ${::operatingsystemrelease} is not supported")
         }
       }
 
